@@ -41,7 +41,7 @@ class _Start_PageState extends State<Start_Page> {
     Utils.log( filename, ' _buildTriggered()');
   }
 
-  Widget insertLineStyler() {
+  Widget displayTextInformation() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -138,6 +138,23 @@ class _Start_PageState extends State<Start_Page> {
     );
   }
 
+  Container placeImage ( String str ) {
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+              "./assets/images/$str.png"),
+          fit: BoxFit.fitHeight,
+          //alignment: Alignment.topLeft,
+        ),
+        color: Colors.transparent,
+      ),                  
+      height: container_height,
+      width: double.infinity,
+      //  color: Colors.white,
+      //  child: insertLineStyler(),
+    );
+  }                  
   
   void _addPostFrameCallbackTriggered( context ) {
     Utils.log( filename, ' _addPostFrameCallbackTriggered()');
@@ -168,36 +185,11 @@ class _Start_PageState extends State<Start_Page> {
               color: Colors.transparent,
               child: Stack(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage(
-                              "./assets/images/fill_top_01.png"),
-                          fit: BoxFit.fitHeight,
-                          //alignment: Alignment.topLeft,
-                        ),
-                        color: Colors.white,
-                      ),                  
-                      height: container_height,
-                      width: double.infinity,
-                      //  color: Colors.white,
-                      child: insertLineStyler(),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage(
-                              "./assets/images/fill_bottom_01.png"),
-                          fit: BoxFit.fitHeight,
-                          //alignment: Alignment.topLeft,
-                        ),
-                        color: Colors.transparent,
-                      ),                  
-                      height: container_height,
-                      width: double.infinity,
-                      //  color: Colors.white,
-                      child: insertLineStyler(),
-                    ),                    
+                    placeImage('fill_top_right_pink'),
+                    placeImage('fill_top_left_red'),
+                    placeImage('fill_bottom_left_pink'),
+                    placeImage('fill_bottom_right_red'),
+                    displayTextInformation(),
                   ],  
                 ),                  
               ),
@@ -206,3 +198,4 @@ class _Start_PageState extends State<Start_Page> {
     );
   }
 }
+
