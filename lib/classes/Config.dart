@@ -7,7 +7,7 @@
 class Config {
   
   static const  String    app_name                  = "flutt_infosheet";
-  static const  String    app_version               = "1.0.alpha.2";
+  static const  String    app_version               = "1.0.alpha.3";
   
   //  timeouts and delays
   static int              server_timeout            = 10;     // seconds
@@ -16,4 +16,5 @@ class Config {
 
   //  CUSTOM STUFF! (from here on this is stuff unique to this App)
   //  ... nuthin' here yet
+  static int info_sheet_num = 1;
 }
