@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../classes/Config.dart';
+import '../classes/InfoSheet.dart';
 import '../classes/Stylize.dart';
 import '../classes/Utils.dart';
 
@@ -21,13 +22,17 @@ class _Info_PageState extends State<Info_Page> {
   // (this page) variables
   static const String filename = 'Info_Page.dart';
   double container_height = double.infinity;
-  List<String> line = ['Game Aborted!','*Oops!* When','you quit a game it','counts as a loss.'];   //  an array for the line/columns to display
+  List<String> xxxline = ['*Oops!* When','you quit a game it','counts as a loss.'];   //  an array for the line/columns to display
   
   @override
   void initState() {
     super.initState();
     Utils.log( filename, 'initState()' );
     WidgetsBinding.instance.addPostFrameCallback((_) => _addPostFrameCallbackTriggered(context));
+
+    // set info sheet
+    InfoSheet.replaceInfoSheet(1);
+
   }
 
   @override
@@ -42,100 +47,7 @@ class _Info_PageState extends State<Info_Page> {
   }
 
   Widget displayTextInformation() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0,0,0,20),
-          child: Container(
-            width: 180,
-            height: 30,
-            decoration: BoxDecoration(
-            image: DecorationImage(
-              image:
-                AssetImage('./assets/images/zigzag_01.png'),
-                fit: BoxFit.fitWidth,
-                //alignment: Alignment.center,
-              ),
-            ),   
-          ),
-        ),
-                              
-      
-        for (var i = 0; i < line.length ; i++) ...[
-          i == 0 ? Stylize.lineStyler( line[i], style: style_name.heading1 )
-          : Stylize.lineStyler( line[i], style: style_name.fancy1 )
-        ],
-
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0,20,0,0),
-          child: Container(
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0,10,0,0),
-                  child: SizedBox(
-                    height: 90,
-                    width: 90,
-                    child: ElevatedButton.icon(
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 65.0,
-                      ),
-                      label: Text('',  style: TextStyle( fontSize: 1, fontWeight: FontWeight.normal,  )),
-                      onPressed: () {
-                        Utils.log( filename,' clicked butt ');
-                        Future.delayed( Duration(milliseconds: Config.short_delay ), () async {
-                          Navigator.of(context).popUntil((ModalRoute.withName ('Start_Page')));
-                          return;
-                        });                         
-                      }, 
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        side: const BorderSide(
-                          width: 5, // the thickness
-                          color: Color(0xFF4DE1fF), // the color of the border
-                        ),
-                        padding: EdgeInsets.fromLTRB(7,5,0,5),
-                        elevation: 5,
-                        shadowColor: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('B A C K', style: TextStyle( fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black,  ),),
-                ),
-                /*
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(135,20,135,0),
-                  child: Container(
-                    height: 30,
-                    decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image:
-                        AssetImage('./assets/images/zigzag_01.png'),
-                        fit: BoxFit.fitHeight,
-                        //alignment: Alignment.center,
-                      ),
-                    ),   
-                  ),
-                ),
-                */                              
-              ],
-            ), 
-          ),
-        )
-      ],
-    );
+    return SizedBox();
   }
 
   Container placeImage ( String str ) {
@@ -151,11 +63,19 @@ class _Info_PageState extends State<Info_Page> {
       ),                  
       height: container_height,
       width: double.infinity,
-      //  color: Colors.white,
-      //  child: insertLineStyler(),
     );
   }                  
   
+  void buttonClicked( BuildContext context ) {
+    Utils.log( filename, InfoSheet.button_click_mssg );
+    //  WILLFIX: this needs a "mount", and a way to
+    //  associate *this* click with a particule InfoSheet
+    Future.delayed( Duration(milliseconds: Config.short_delay ), () async {
+      if(mounted) Navigator.of(context).popUntil((ModalRoute.withName ('Start_Page')));
+      return;
+    }); 
+  }
+
   void _addPostFrameCallbackTriggered( context ) {
     Utils.log( filename, ' _addPostFrameCallbackTriggered()');
   }
@@ -168,7 +88,10 @@ class _Info_PageState extends State<Info_Page> {
 
     return WillPopScope(
       onWillPop: () async {
-        return true;  //  this allows the back button to work
+        if ( InfoSheet.show_back_button ) {
+          buttonClicked( context );
+        }
+        return false;  //  disable back button altogether!! ( though it may be used with buttonClicked() above this ^^ )
       },
       child: SafeArea(
           child: Scaffold(
@@ -179,17 +102,120 @@ class _Info_PageState extends State<Info_Page> {
               centerTitle: true,
               elevation: 0,
               backgroundColor: Colors.transparent,
+              automaticallyImplyLeading: InfoSheet.show_back_button,
             ), //AppBar
             // drawer: Drawer_Widget(),
             body: Container(
               color: Colors.transparent,
               child: Stack(
                   children: [
-                    placeImage('fill_top_right_pink'),
-                    placeImage('fill_top_left_red'),
-                    placeImage('fill_bottom_left_pink'),
-                    placeImage('fill_bottom_right_red'),
-                    displayTextInformation(),
+                    placeImage(InfoSheet.theme_image_top_right),
+                    placeImage(InfoSheet.theme_image_top_left),
+                    placeImage(InfoSheet.theme_image_bottom_left),
+                    placeImage(InfoSheet.theme_image_bottom_right),
+
+                    //  START OF THE INFORMATION
+                    //  (heading image, headline, text, button, etc.)
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+
+                        //  = Heading Image =  
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0,0,0,20),
+                          child: Container(
+                            width: 180,
+                            height: 30,
+                            decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                AssetImage( InfoSheet.heading_image ),
+                                fit: BoxFit.fitWidth,
+                                //alignment: Alignment.center,
+                              ),
+                            ),   
+                          ),
+                        ),
+
+                        //  = Headline =                      
+                        Stylize.lineStyler( InfoSheet.headline, style: style_name.heading1 ),
+
+                        //  = Lines of Text = 
+                        for (var i = 0; i < InfoSheet.line.length ; i++) ...[
+                          Stylize.lineStyler( InfoSheet.line[i], style: style_name.fancy1 )
+                        ],
+
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0,20,0,0),
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(0,10,0,0),
+                                  child: SizedBox(
+                                    height: 90,
+                                    width: 90,
+                                    child: ElevatedButton.icon(
+                                      icon: Icon(
+                                        InfoSheet.button_icon,
+                                        color: Colors.white,
+                                        size: 65.0,
+                                      ),
+                                      label: Text('',  style: TextStyle( fontSize: 1, fontWeight: FontWeight.normal,  )),
+                                      onPressed: () {
+                                        buttonClicked( context );                        
+                                      }, 
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                        ), 
+                                        backgroundColor: InfoSheet.button_color,
+                                        side: BorderSide(
+                                          width: 5, // the thickness
+                                          color: InfoSheet.button_border_color, // the color of the border
+                                        ),
+                                        padding: EdgeInsets.fromLTRB(7,5,0,5),
+                                        elevation: 5,
+                                        shadowColor: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text( InfoSheet.button_label, style: TextStyle( fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black,  ),),
+                                ),
+                                /*
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(135,20,135,0),
+                                  child: Container(
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image:
+                                        AssetImage('./assets/images/zigzag_01.png'),
+                                        fit: BoxFit.fitHeight,
+                                        //alignment: Alignment.center,
+                                      ),
+                                    ),   
+                                  ),
+                                ),
+                                */                              
+                              ],
+                            ), 
+                          ),
+                        )
+                      ],
+                    ),
+
+
+
+
+
+
                   ],  
                 ),                  
               ),
