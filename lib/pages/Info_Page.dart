@@ -22,7 +22,6 @@ class _Info_PageState extends State<Info_Page> {
   // (this page) variables
   static const String filename = 'Info_Page.dart';
   double container_height = double.infinity;
-  List<String> xxxline = ['*Oops!* When','you quit a game it','counts as a loss.'];   //  an array for the line/columns to display
   
   @override
   void initState() {
@@ -30,9 +29,9 @@ class _Info_PageState extends State<Info_Page> {
     Utils.log( filename, 'initState()' );
     WidgetsBinding.instance.addPostFrameCallback((_) => _addPostFrameCallbackTriggered(context));
 
-    // set info sheet
-    InfoSheet.replaceInfoSheet(1);
-
+    // flip info sheet
+    Config.info_sheet_num == 0 ? Config.info_sheet_num = 1 : Config.info_sheet_num = 0;
+    InfoSheet.replaceInfoSheet( Config.info_sheet_num );
   }
 
   @override
@@ -122,7 +121,7 @@ class _Info_PageState extends State<Info_Page> {
 
                         //  = Heading Image =  
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0,0,0,20),
+                          padding: const EdgeInsets.fromLTRB(0,0,0,10),
                           child: Container(
                             width: 180,
                             height: 30,

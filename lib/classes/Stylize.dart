@@ -129,7 +129,7 @@ class Stylize {
           fontSize: 26,
           letterSpacing: 3,
           fontWeight: FontWeight.bold,
-          color: Colors.pink,
+          color: Color(0xFFff7ee3), // 
           fontFamily: 'Mono1',
           shadows: <Shadow>[
             Shadow(

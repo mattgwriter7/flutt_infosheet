@@ -11,7 +11,7 @@ class InfoSheet  {
   //  this hslper class starts with these default values
   static int index = 0;                                             //  0   -> the default sheet
   static bool show_back_button = true;                              //  should the back button be shown?
-  static String heading_image = './assets/images/zigzag_01.png';    //  use a little decorating header image?
+  static String heading_image = './assets/images/zigzag_red.png';    //  use a little decorating header image?
   static String headline = 'Game Aborted!';                      
   static List<String> line = [
     '*Oops?!* When',
@@ -41,7 +41,8 @@ class InfoSheet  {
       theme_image_bottom_left = 'fill_bottom_left_pink';
       theme_image_bottom_right = 'fill_bottom_right_red'; 
       button_border_color = Color(0xFFf53c87);
-      button_color = Color(0xFFe4015d);      
+      button_color = Color(0xFFe4015d);
+      heading_image = './assets/images/zigzag_red.png';      
     }
     else {
       theme_image_top_left = 'fill_top_left_blue';
@@ -50,6 +51,7 @@ class InfoSheet  {
       theme_image_bottom_right = 'fill_bottom_right_yellow'; 
       button_border_color = Color(0xFF4DE1fF);
       button_color = Color(0xFF2196f3);       
+      heading_image = './assets/images/zigzag_01.png';
     }
     return;
   }
@@ -81,7 +83,7 @@ class InfoSheet  {
           'you quit a game it',
           'counts as a loss.'
         ];
-        button_icon = Icons.ac_unit;                      //  which icon to use (for the button) ?
+        button_icon = Icons.arrow_back;                      //  which icon to use (for the button) ?
         button_label = 'H O M E';
         button_click_mssg = "clicked button for 'default' InfoSheet()";
         setTheme(0);    
