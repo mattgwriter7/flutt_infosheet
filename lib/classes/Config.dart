@@ -6,8 +6,8 @@
 
 class Config {
   
-  static const  String    app_name                  = "flutt_starter";
-  static const  String    app_version               = "1.0.alpha.1";
+  static const  String    app_name                  = "flutt_infosheet";
+  static const  String    app_version               = "1.0.alpha.2";
   
   //  timeouts and delays
   static int              server_timeout            = 10;     // seconds

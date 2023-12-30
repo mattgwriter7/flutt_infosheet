@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import '../classes/Config.dart';
-import '../classes/Stylize.dart';
 import '../classes/Utils.dart';
 
 class Start_Page extends StatefulWidget {
@@ -20,9 +19,8 @@ class _Start_PageState extends State<Start_Page> {
 
   // (this page) variables
   static const String filename = 'Start_Page.dart';
-  double container_height = double.infinity;
-  List<String> line = ['Game Aborted!','*Oops!* When','you quit a game it','counts as a loss.'];   //  an array for the line/columns to display
   
+  // (this page) init and dispose
   @override
   void initState() {
     super.initState();
@@ -40,104 +38,6 @@ class _Start_PageState extends State<Start_Page> {
   void _buildTriggered() {
     Utils.log( filename, ' _buildTriggered()');
   }
-
-  Widget insertLineStyler() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0,0,0,20),
-          child: Container(
-            width: 180,
-            height: 30,
-            decoration: BoxDecoration(
-            image: DecorationImage(
-              image:
-                AssetImage('./assets/images/zigzag_01.png'),
-                fit: BoxFit.fitWidth,
-                //alignment: Alignment.center,
-              ),
-            ),   
-          ),
-        ),
-                              
-      
-        for (var i = 0; i < line.length ; i++) ...[
-          i == 0 ? Stylize.lineStyler( line[i], style: style_name.heading1 )
-          : Stylize.lineStyler( line[i], style: style_name.fancy1 )
-        ],
-
-        Padding(
-          padding: const EdgeInsets.fromLTRB(0,20,0,0),
-          child: Container(
-            color: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0,10,0,0),
-                  child: SizedBox(
-                    height: 90,
-                    width: 90,
-                    child: ElevatedButton.icon(
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 65.0,
-                      ),
-                      label: Text('',  style: TextStyle( fontSize: 1, fontWeight: FontWeight.normal,  )),
-                      onPressed: () {
-                        Utils.log( filename,' clicked butt ');
-                        Future.delayed( Duration(milliseconds: Config.short_delay ), () async {
-                          Navigator.of(context).popUntil((ModalRoute.withName ('Start_Page')));
-                          return;
-                        });                         
-                      }, 
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        side: const BorderSide(
-                          width: 5, // the thickness
-                          color: Color(0xFF4DE1fF), // the color of the border
-                        ),
-                        padding: EdgeInsets.fromLTRB(7,5,0,5),
-                        elevation: 5,
-                        shadowColor: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('B A C K', style: TextStyle( fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black,  ),),
-                ),
-                /*
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(135,20,135,0),
-                  child: Container(
-                    height: 30,
-                    decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image:
-                        AssetImage('./assets/images/zigzag_01.png'),
-                        fit: BoxFit.fitHeight,
-                        //alignment: Alignment.center,
-                      ),
-                    ),   
-                  ),
-                ),
-                */                              
-              ],
-            ), 
-          ),
-        )
-      ],
-    );
-  }
-
   
   void _addPostFrameCallbackTriggered( context ) {
     Utils.log( filename, ' _addPostFrameCallbackTriggered()');
@@ -156,51 +56,48 @@ class _Start_PageState extends State<Start_Page> {
       child: SafeArea(
           child: Scaffold(
             resizeToAvoidBottomInset: false,  
-            extendBodyBehindAppBar: true,
             appBar: AppBar(
-              title: const Text( '' ),
+              title: const Text( filename ),
               centerTitle: true,
-              elevation: 0,
-              backgroundColor: Colors.transparent,
             ), //AppBar
             // drawer: Drawer_Widget(),
-            body: Container(
-              color: Colors.transparent,
-              child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage(
-                              "./assets/images/fill_top_01.png"),
-                          fit: BoxFit.fitHeight,
-                          //alignment: Alignment.topLeft,
-                        ),
-                        color: Colors.white,
-                      ),                  
-                      height: container_height,
-                      width: double.infinity,
-                      //  color: Colors.white,
-                      child: insertLineStyler(),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage(
-                              "./assets/images/fill_bottom_01.png"),
-                          fit: BoxFit.fitHeight,
-                          //alignment: Alignment.topLeft,
-                        ),
-                        color: Colors.transparent,
-                      ),                  
-                      height: container_height,
-                      width: double.infinity,
-                      //  color: Colors.white,
-                      child: insertLineStyler(),
-                    ),                    
-                  ],  
-                ),                  
-              ),
+            body: Stack(
+              children: [
+                Container(
+                  color: Colors.transparent,
+                  child: Center(
+                    child: ElevatedButton(
+                      child: Text( 'Info_Page() >>' ),
+                      onPressed: () {
+                        Utils.log( filename, 'go to Info_Page()');
+                        Future.delayed( Duration(milliseconds: Config.short_delay ), () async {
+                          Navigator.of(context).pushNamed('Info_Page');         
+                          return;
+                        }); 
+                      },
+                    ),  
+                  ),
+                ),
+
+                //  version number
+                Positioned(
+                  left: 10,
+                  bottom: 10,
+                  child: GestureDetector(
+                    child: Text( Config.app_version ),
+                    onLongPress: () {
+                      Utils.log( filename, 'go to Dummies_Page()');
+                      Future.delayed( Duration(milliseconds: Config.short_delay ), () async {
+                        Navigator.of(context).pushNamed('Dummies_Page');         
+                        return;
+                      }); 
+                    },
+                  ),
+                ),
+
+
+              ],  
+            ),
           ),
         ),
     );
