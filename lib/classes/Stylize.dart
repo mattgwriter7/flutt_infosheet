@@ -129,7 +129,7 @@ class Stylize {
           fontSize: 26,
           letterSpacing: 3,
           fontWeight: FontWeight.bold,
-          color: Color(0xFFff7ee3), // 
+          color: Color(0xFFf53c87), // 
           fontFamily: 'Mono1',
           shadows: <Shadow>[
             Shadow(
@@ -146,10 +146,18 @@ class Stylize {
         ); 
       case style_name.fancy2:
         return const TextStyle(
-          fontSize: 36,
+          fontSize: 26,
           letterSpacing: 3,
           fontWeight: FontWeight.bold,
-          // fontFamily: 'Mono1', // CourierPrime-Bold.ttf
+          color: Colors.grey, // 
+          fontFamily: 'Mono1',
+          shadows: <Shadow>[
+            Shadow(
+              offset: Offset(1.0, 1.0),
+              blurRadius: 2.0,
+              color: Colors.black,
+            ),
+          ],
         );                
       default:  // normal
         return const TextStyle(

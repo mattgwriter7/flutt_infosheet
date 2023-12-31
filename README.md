@@ -5,7 +5,8 @@ This is an attractive UI for an Information Screen.  It has a background design 
 README.md is a general info, NOTES.md is for longer stuff.
 
 ## LEFT OFF
-* made 2 different "sheets" that switch each time you go to Info_Page
+* added font
+* trying to add heading images (see alien)
 
 ## NEXT
 * tweak fonts 

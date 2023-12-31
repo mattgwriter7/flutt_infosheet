@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../classes/Config.dart';
-import '../classes/InfoSheet.dart';
+import '../classes/Sheet.dart';
 import '../classes/Stylize.dart';
 import '../classes/Utils.dart';
 
@@ -31,7 +31,7 @@ class _Info_PageState extends State<Info_Page> {
 
     // flip info sheet
     Config.info_sheet_num == 0 ? Config.info_sheet_num = 1 : Config.info_sheet_num = 0;
-    InfoSheet.replaceInfoSheet( Config.info_sheet_num );
+    Sheet.replaceSheet( Config.info_sheet_num );
   }
 
   @override
@@ -66,9 +66,9 @@ class _Info_PageState extends State<Info_Page> {
   }                  
   
   void buttonClicked( BuildContext context ) {
-    Utils.log( filename, InfoSheet.button_click_mssg );
+    Utils.log( filename, Sheet.button_click_mssg );
     //  WILLFIX: this needs a "mount", and a way to
-    //  associate *this* click with a particule InfoSheet
+    //  associate *this* click with a particule Sheet
     Future.delayed( Duration(milliseconds: Config.short_delay ), () async {
       if(mounted) Navigator.of(context).popUntil((ModalRoute.withName ('Start_Page')));
       return;
@@ -87,7 +87,7 @@ class _Info_PageState extends State<Info_Page> {
 
     return WillPopScope(
       onWillPop: () async {
-        if ( InfoSheet.show_back_button ) {
+        if ( Sheet.show_back_button ) {
           buttonClicked( context );
         }
         return false;  //  disable back button altogether!! ( though it may be used with buttonClicked() above this ^^ )
@@ -101,17 +101,17 @@ class _Info_PageState extends State<Info_Page> {
               centerTitle: true,
               elevation: 0,
               backgroundColor: Colors.transparent,
-              automaticallyImplyLeading: InfoSheet.show_back_button,
+              automaticallyImplyLeading: Sheet.show_back_button,
             ), //AppBar
             // drawer: Drawer_Widget(),
             body: Container(
               color: Colors.transparent,
               child: Stack(
                   children: [
-                    placeImage(InfoSheet.theme_image_top_right),
-                    placeImage(InfoSheet.theme_image_top_left),
-                    placeImage(InfoSheet.theme_image_bottom_left),
-                    placeImage(InfoSheet.theme_image_bottom_right),
+                    placeImage(Sheet.theme_image_top_right),
+                    placeImage(Sheet.theme_image_top_left),
+                    placeImage(Sheet.theme_image_bottom_left),
+                    placeImage(Sheet.theme_image_bottom_right),
 
                     //  START OF THE INFORMATION
                     //  (heading image, headline, text, button, etc.)
@@ -128,7 +128,7 @@ class _Info_PageState extends State<Info_Page> {
                             decoration: BoxDecoration(
                             image: DecorationImage(
                               image:
-                                AssetImage( InfoSheet.heading_image ),
+                                AssetImage( Sheet.heading_image ),
                                 fit: BoxFit.fitWidth,
                                 //alignment: Alignment.center,
                               ),
@@ -137,11 +137,11 @@ class _Info_PageState extends State<Info_Page> {
                         ),
 
                         //  = Headline =                      
-                        Stylize.lineStyler( InfoSheet.headline, style: style_name.heading1 ),
+                        Stylize.lineStyler( Sheet.headline, style: style_name.heading1 ),
 
                         //  = Lines of Text = 
-                        for (var i = 0; i < InfoSheet.line.length ; i++) ...[
-                          Stylize.lineStyler( InfoSheet.line[i], style: style_name.fancy1 )
+                        for (var i = 0; i < Sheet.line.length ; i++) ...[
+                          Stylize.lineStyler( Sheet.line[i], style: Sheet.fancy_font )
                         ],
 
                         Padding(
@@ -159,7 +159,7 @@ class _Info_PageState extends State<Info_Page> {
                                     width: 90,
                                     child: ElevatedButton.icon(
                                       icon: Icon(
-                                        InfoSheet.button_icon,
+                                        Sheet.button_icon,
                                         color: Colors.white,
                                         size: 65.0,
                                       ),
@@ -171,10 +171,10 @@ class _Info_PageState extends State<Info_Page> {
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(10.0),
                                         ), 
-                                        backgroundColor: InfoSheet.button_color,
+                                        backgroundColor: Sheet.button_color,
                                         side: BorderSide(
                                           width: 5, // the thickness
-                                          color: InfoSheet.button_border_color, // the color of the border
+                                          color: Sheet.button_border_color, // the color of the border
                                         ),
                                         padding: EdgeInsets.fromLTRB(7,5,0,5),
                                         elevation: 5,
@@ -185,7 +185,7 @@ class _Info_PageState extends State<Info_Page> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text( InfoSheet.button_label, style: TextStyle( fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black,  ),),
+                                  child: Text( Sheet.button_label, style: TextStyle( fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black,  ),),
                                 ),
                                 /*
                                 Padding(
