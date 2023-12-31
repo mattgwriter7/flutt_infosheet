@@ -65,6 +65,34 @@ class _Info_PageState extends State<Info_Page> {
     );
   }                  
   
+
+  Row placeDecoration() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        for (var i=0 ; i < 10; i++)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0,0,8,18),
+            child: Container(
+              width: 10,
+              height: 9,
+              decoration: BoxDecoration(
+                color: Sheet.button_color,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(.3),
+                    spreadRadius: 1,
+                    blurRadius: 0,
+                    offset: Offset(1, 1), // changes position of shadow
+                  ),
+                ],                
+              ),
+            ),
+        ),
+      ],
+    );
+  }   
+
   void buttonClicked( BuildContext context ) {
     Utils.log( filename, Sheet.button_click_mssg );
     //  WILLFIX: this needs a "mount", and a way to
@@ -120,6 +148,8 @@ class _Info_PageState extends State<Info_Page> {
                       children: [
 
                         //  = Heading Image =  
+                        placeDecoration(),
+                        /*
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0,0,0,10),
                           child: Container(
@@ -135,6 +165,7 @@ class _Info_PageState extends State<Info_Page> {
                             ),   
                           ),
                         ),
+                        */
 
                         //  = Headline =                      
                         Stylize.lineStyler( Sheet.headline, style: style_name.heading1 ),
@@ -210,11 +241,18 @@ class _Info_PageState extends State<Info_Page> {
                       ],
                     ),
 
-
-
-
-
-
+                    Positioned(
+                      right: 15,
+                      bottom: 15,
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: SizedBox(
+                        height:206,
+                        width: 100,
+                        child:Image.asset("assets/images/bunny.png"),
+                        ),
+                      ),
+                    ),
                   ],  
                 ),                  
               ),
