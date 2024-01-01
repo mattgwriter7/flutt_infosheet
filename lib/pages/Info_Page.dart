@@ -247,9 +247,9 @@ class _Info_PageState extends State<Info_Page> {
                       child: FittedBox(
                         fit: BoxFit.contain,
                         child: SizedBox(
-                        height:206,
-                        width: 100,
-                        child:Image.asset("assets/images/bunny.png"),
+                        width: Sheet.corner_image_width,
+                        height: Sheet.corner_image_height,
+                        child:Image.asset( Sheet.corner_image_src ),
                         ),
                       ),
                     ),
