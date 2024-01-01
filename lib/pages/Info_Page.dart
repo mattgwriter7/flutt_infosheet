@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import '../classes/Config.dart';
 import '../classes/Sheet.dart';
 import '../classes/Stylize.dart';
@@ -73,22 +74,29 @@ class _Info_PageState extends State<Info_Page> {
         for (var i=0 ; i < 10; i++)
           Padding(
             padding: const EdgeInsets.fromLTRB(0,0,8,18),
-            child: Container(
-              width: 10,
-              height: 9,
-              decoration: BoxDecoration(
-                color: Sheet.button_color,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(.3),
-                    spreadRadius: 1,
-                    blurRadius: 0,
-                    offset: Offset(1, 1), // changes position of shadow
-                  ),
-                ],                
+            child: 
+              Animate(
+                effects: [ 
+                FadeEffect( delay: (800+(i*33)).ms  ),
+                // ScaleEffect( delay: 250.ms, duration: 200.ms )
+              ],	
+              child: Container(
+                width: 10,
+                height: 9,
+                decoration: BoxDecoration(
+                  color: Sheet.button_color,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(.3),
+                      spreadRadius: 1,
+                      blurRadius: 0,
+                      offset: Offset(1, 1), // changes position of shadow
+                    ),
+                  ],                
+                ),
               ),
             ),
-        ),
+                ),
       ],
     );
   }   
@@ -136,10 +144,34 @@ class _Info_PageState extends State<Info_Page> {
               color: Colors.transparent,
               child: Stack(
                   children: [
-                    placeImage(Sheet.theme_image_top_right),
-                    placeImage(Sheet.theme_image_top_left),
-                    placeImage(Sheet.theme_image_bottom_left),
-                    placeImage(Sheet.theme_image_bottom_right),
+                    Animate( 
+                      child: placeImage(Sheet.theme_image_top_right),
+                      effects: [ 
+                        ScaleEffect( delay: 100.ms, duration: 200.ms ),
+                        ScaleEffect( delay: 100.ms, duration: 200.ms )
+                      ],
+                    ),
+                    Animate(
+                      child: placeImage(Sheet.theme_image_top_left),
+                      effects: [ 
+                        ScaleEffect( delay: 150.ms, duration: 200.ms ),
+                        ScaleEffect( delay: 150.ms, duration: 200.ms )
+                      ],
+                    ),
+                    Animate(
+                      child: placeImage(Sheet.theme_image_bottom_left),
+                      effects: [ 
+                        ScaleEffect( delay: 250.ms, duration: 200.ms ),
+                        ScaleEffect( delay: 250.ms, duration: 200.ms )
+                      ],
+                    ),
+                    Animate(
+                      child: placeImage(Sheet.theme_image_bottom_right),
+                      effects: [ 
+                        SlideEffect( delay: 300.ms, duration: 200.ms ),
+                        ScaleEffect( delay: 300.ms, duration: 200.ms )
+                      ],
+                    ),
 
                     //  START OF THE INFORMATION
                     //  (heading image, headline, text, button, etc.)
@@ -148,7 +180,10 @@ class _Info_PageState extends State<Info_Page> {
                       children: [
 
                         //  = Heading Image =  
-                        placeDecoration(),
+                        Animate(
+                          child: placeDecoration(),
+                          effects: [ ScaleEffect( delay: 666.ms, duration: 111.ms )],
+                        ),
                         /*
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0,0,0,10),
@@ -168,74 +203,89 @@ class _Info_PageState extends State<Info_Page> {
                         */
 
                         //  = Headline =                      
-                        Stylize.lineStyler( Sheet.headline, style: style_name.heading1 ),
+                        Animate(
+                          child: Stylize.lineStyler( Sheet.headline, style: style_name.heading1 ),
+                          effects: [ ScaleEffect( delay: 777.ms, duration: 111.ms )],
+                        ),
 
                         //  = Lines of Text = 
                         for (var i = 0; i < Sheet.line.length ; i++) ...[
-                          Stylize.lineStyler( Sheet.line[i], style: Sheet.fancy_font )
+                          Animate(
+                            child: Stylize.lineStyler( Sheet.line[i], style: Sheet.fancy_font ),
+                            effects: [ ScaleEffect( delay: 333.ms, duration: ((i+1)*111).ms )],
+                          ),
                         ],
 
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0,20,0,0),
-                          child: Container(
-                            color: Colors.transparent,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(0,10,0,0),
-                                  child: SizedBox(
-                                    height: 90,
-                                    width: 90,
-                                    child: ElevatedButton.icon(
-                                      icon: Icon(
-                                        Sheet.button_icon,
-                                        color: Colors.white,
-                                        size: 65.0,
-                                      ),
-                                      label: Text('',  style: TextStyle( fontSize: 1, fontWeight: FontWeight.normal,  )),
-                                      onPressed: () {
-                                        buttonClicked( context );                        
-                                      }, 
-                                      style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10.0),
-                                        ), 
-                                        backgroundColor: Sheet.button_color,
-                                        side: BorderSide(
-                                          width: 5, // the thickness
-                                          color: Sheet.button_border_color, // the color of the border
+                        Animate(
+                          effects: [ 
+                            ScaleEffect( delay: 666.ms, duration: 111.ms ),
+                            ShakeEffect( 
+                              delay: 10100.ms, duration: 333.ms, 
+                              curve: Curves.easeInOutCubic,
+                            )
+                          ],
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0,20,0,0),
+                            child: Container(
+                              color: Colors.transparent,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0,10,0,0),
+                                    child: SizedBox(
+                                      height: 90,
+                                      width: 90,
+                                      child: ElevatedButton.icon(
+                                        icon: Icon(
+                                          Sheet.button_icon,
+                                          color: Colors.white,
+                                          size: 65.0,
                                         ),
-                                        padding: EdgeInsets.fromLTRB(7,5,0,5),
-                                        elevation: 5,
-                                        shadowColor: Colors.black,
+                                        label: Text('',  style: TextStyle( fontSize: 1, fontWeight: FontWeight.normal,  )),
+                                        onPressed: () {
+                                          buttonClicked( context );                        
+                                        }, 
+                                        style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                          ), 
+                                          backgroundColor: Sheet.button_color,
+                                          side: BorderSide(
+                                            width: 5, // the thickness
+                                            color: Sheet.button_border_color, // the color of the border
+                                          ),
+                                          padding: EdgeInsets.fromLTRB(7,5,0,5),
+                                          elevation: 5,
+                                          shadowColor: Colors.black,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text( Sheet.button_label, style: TextStyle( fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black,  ),),
-                                ),
-                                /*
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(135,20,135,0),
-                                  child: Container(
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image:
-                                        AssetImage('./assets/images/zigzag_01.png'),
-                                        fit: BoxFit.fitHeight,
-                                        //alignment: Alignment.center,
-                                      ),
-                                    ),   
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text( Sheet.button_label, style: TextStyle( fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black,  ),),
                                   ),
-                                ),
-                                */                              
-                              ],
-                            ), 
+                                  /*
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(135,20,135,0),
+                                    child: Container(
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image:
+                                          AssetImage('./assets/images/zigzag_01.png'),
+                                          fit: BoxFit.fitHeight,
+                                          //alignment: Alignment.center,
+                                        ),
+                                      ),   
+                                    ),
+                                  ),
+                                  */                              
+                                ],
+                              ), 
+                            ),
                           ),
                         )
                       ],
@@ -244,12 +294,15 @@ class _Info_PageState extends State<Info_Page> {
                     Positioned(
                       right: 15,
                       bottom: 15,
-                      child: FittedBox(
-                        fit: BoxFit.contain,
-                        child: SizedBox(
-                        width: Sheet.corner_image_width,
-                        height: Sheet.corner_image_height,
-                        child:Image.asset( Sheet.corner_image_src ),
+                      child: Animate(
+                        effects: [ ScaleEffect( delay: 900.ms, duration: 111.ms )],
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: SizedBox(
+                          width: Sheet.corner_image_width,
+                          height: Sheet.corner_image_height,
+                          child:Image.asset( Sheet.corner_image_src ),
+                          ),
                         ),
                       ),
                     ),
