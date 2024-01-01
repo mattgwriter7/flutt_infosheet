@@ -12,7 +12,6 @@ class Sheet {
   //  this helper class starts with these default values
   static int index = 0;                                             //  0   -> the default sheet
   static bool show_back_button = true;                              //  should the back button be shown?
-  static String heading_image = '';                                 //  use a little decorating header image?
   static String headline = '';                      
   static List<String> line = [];
   static IconData button_icon = Icons.arrow_back;                   //  which icon to use (for the button) ?
@@ -21,7 +20,7 @@ class Sheet {
   static Color button_border_color = Colors.transparent;
   static Color button_color = Colors.transparent;
   
-  //  these data ( colors to use, basically )
+  //  theme data ( colors to use, basically )
   static int theme = 0;
   static String theme_image_top_left = '';
   static String theme_image_top_right = '';
@@ -32,6 +31,10 @@ class Sheet {
   static style_name headline_font = style_name.heading1;
   static style_name fancy_font = style_name.fancy1;
 
+  //  corner image
+  static String corner_image_src = 'assets/images/sprite_peppermint.png';   
+  static double corner_image_width = 130;
+  static double corner_image_height = 180;
   
   
   //  ==============
@@ -46,8 +49,7 @@ class Sheet {
       theme_image_bottom_right = 'fill_bottom_right_red'; 
       button_border_color = Color(0xFFf53c87);
       button_color = Color(0xFFe4015d);
-      heading_image = './assets/images/zigzag_red.png';
-      fancy_font = style_name.fancy1;      
+      fancy_font = style_name.fancy1;   
     }
     else {
       theme_image_top_left = 'fill_top_left_blue';
@@ -56,7 +58,6 @@ class Sheet {
       theme_image_bottom_right = 'fill_bottom_right_yellow'; 
       button_border_color = Color(0xFF4DE1fF);
       button_color = Color(0xFF2196f3);       
-      heading_image = './assets/images/alien.png';
       fancy_font = style_name.fancy2;
     }
     return;
@@ -67,7 +68,6 @@ class Sheet {
       case 1:
         index = num;                                             
         show_back_button = false;                               
-        //  heading_image = './assets/images/alien.png';     
         headline = 'REMEMBER!';                      
         line = [
           'You can *NEVER*',
@@ -77,12 +77,15 @@ class Sheet {
         button_icon = Icons.check;                       
         button_label = 'S U R E';
         button_click_mssg = "clicked button for Sheet #" + num.toString();
+        //  corner image
+        corner_image_src = 'assets/images/sprite_peppermint.png';   
+        corner_image_width = 130;
+        corner_image_height = 180; 
         setTheme(1);    
       break;
       default: 
         index = 0;                                              
         show_back_button = true;                               
-        heading_image = './assets/images/zigzag_01.png';     
         headline = 'Game Aborted!';                      
         line = [
           '*OOPS!* When',
@@ -92,6 +95,10 @@ class Sheet {
         button_icon = Icons.arrow_back;                      //  which icon to use (for the button) ?
         button_label = 'H O M E';
         button_click_mssg = "clicked button for 'default' Sheet()";
+        //  corner image
+        corner_image_src = 'assets/images/sprite_tricky.png';   
+        corner_image_width = 100;
+        corner_image_height = 249; 
         setTheme(0);    
       break;
     }  
