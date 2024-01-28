@@ -3,6 +3,9 @@ This is an animated "information sheet," sort of like a powerpoint slide, for Fl
 
 <img src="https://mattgwriter7.com/assets/github/flutt_infosheet.jpg" width="150" title="screen cap form phone">     
 
+Here is a Youtube Shorts demo:    
+[video](https://www.youtube.com/shorts/PNlyay0R_co)   													
+
 ## DETAILS
 I made this small project so I have a repo for a re-usable "information sheet" for various projects.  It uses one package -- "flutter_animate" -- in order to give the "sheets" some sizzle.  
 
